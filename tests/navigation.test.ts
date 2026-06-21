@@ -15,12 +15,7 @@ const anchorNavigationCases: Array<{
 
 test.describe("navigation guard", () => {
   for (const { navItem, targetSection } of anchorNavigationCases) {
-    test(`desktop nav reaches ${targetSection}`, async ({ page }, testInfo) => {
-      test.skip(
-        testInfo.project.name === "Mobile Chrome",
-        "Desktop navigation is covered separately from mobile menu",
-      );
-
+    test(`desktop nav reaches ${targetSection}`, async ({ page }) => {
       const home = new HomePage(page);
 
       await home.goTo();
@@ -30,12 +25,7 @@ test.describe("navigation guard", () => {
     });
   }
 
-  test("blog navigation points to the blog route", async ({ page }, testInfo) => {
-    test.skip(
-      testInfo.project.name === "Mobile Chrome",
-      "Desktop navigation is covered separately from mobile menu",
-    );
-
+  test("blog navigation points to the blog route", async ({ page }) => {
     const home = new HomePage(page);
 
     await home.goTo();

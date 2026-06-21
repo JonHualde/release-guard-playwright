@@ -24,6 +24,14 @@ It is intentionally small. A failing test should point to a clear release risk, 
 - Desktop Chromium and mobile Chromium.
 - Console errors and uncaught page errors on guarded journeys.
 
+## Project Execution
+
+Desktop and mobile projects run different test subsets when the user promise is device-specific:
+
+- Desktop covers conversion, localization, credibility content, navigation, and technical health.
+- Mobile covers conversion, credibility content, mobile usability, and technical health.
+- Device-specific tests are filtered in Playwright project configuration, not skipped at runtime.
+
 ## Out Of Scope For V1
 
 - Pixel-perfect visual regression.
@@ -58,3 +66,9 @@ Every local run can preserve:
 - Raw `test-results` folder when available.
 
 In CI, artifacts should only be uploaded when the tested URL and captured UI are safe to expose to repository readers.
+
+## V2 Backlog
+
+- Mobile localization, if the language switcher is exposed in the mobile navigation.
+- Deeper Cal.com handoff coverage, if the third-party flow is stable enough.
+- Controlled public reporting, only when report contents can be safely exposed.

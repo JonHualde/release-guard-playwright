@@ -2,14 +2,7 @@ import { expect, test } from "@playwright/test";
 import { HomePage } from "../page-objects";
 
 test.describe("localization guard", () => {
-  test("visitor can switch from French to English", async ({
-    page,
-  }, testInfo) => {
-    test.skip(
-      testInfo.project.name === "Mobile Chrome",
-      "Desktop-only language switcher",
-    );
-
+  test("visitor can switch from French to English", async ({ page }) => {
     const home = new HomePage(page);
 
     await home.goTo();

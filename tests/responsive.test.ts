@@ -4,12 +4,7 @@ import { HomePage } from "../page-objects";
 test.describe("mobile usability guard", () => {
   test("mobile visitor can open navigation and reach booking section", async ({
     page,
-  }, testInfo) => {
-    test.skip(
-      testInfo.project.name !== "Mobile Chrome",
-      "Mobile guard runs only in the mobile project",
-    );
-
+  }) => {
     const home = new HomePage(page);
 
     await home.goTo();
@@ -24,14 +19,7 @@ test.describe("mobile usability guard", () => {
     await expect(home.calContainer).toBeVisible();
   });
 
-  test("page does not create obvious horizontal overflow", async ({
-    page,
-  }, testInfo) => {
-    test.skip(
-      testInfo.project.name !== "Mobile Chrome",
-      "Mobile guard runs only in the mobile project",
-    );
-
+  test("page does not create obvious horizontal overflow", async ({ page }) => {
     const home = new HomePage(page);
 
     await home.goTo();
