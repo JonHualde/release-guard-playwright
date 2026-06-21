@@ -8,7 +8,7 @@ The goal is not exhaustive regression testing. The suite protects the critical p
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 24+
 - npm
 - A running or deployed target website
 
