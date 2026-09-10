@@ -6,10 +6,10 @@ const anchorNavigationCases: Array<{
   navItem: HomeTypes.NavItem;
   targetSection: HomeTypes.KeySection;
 }> = [
-  { navItem: "home", targetSection: "home" },
-  { navItem: "services", targetSection: "services" },
-  { navItem: "process", targetSection: "process" },
-  { navItem: "caseStudies", targetSection: "successStories" },
+  { navItem: "diagnostic", targetSection: "diagnostic" },
+  { navItem: "work", targetSection: "clientWork" },
+  { navItem: "proof", targetSection: "proof" },
+  { navItem: "about", targetSection: "about" },
   { navItem: "contact", targetSection: "contact" },
 ];
 
@@ -24,12 +24,4 @@ test.describe("navigation guard", () => {
       await expect(home.section(targetSection)).toBeInViewport();
     });
   }
-
-  test("blog navigation points to the blog route", async ({ page }) => {
-    const home = new HomePage(page);
-
-    await home.goTo();
-
-    await expect(home.navLinks.blog).toHaveAttribute("href", "/blog");
-  });
 });

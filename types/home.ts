@@ -1,30 +1,31 @@
-export type NavItem =
-  | "home"
-  | "services"
-  | "process"
-  | "caseStudies"
-  | "blog"
-  | "contact";
+export type NavItem = "diagnostic" | "work" | "proof" | "about" | "contact";
 
 export type LanguageOption = "fr" | "en";
 
 export type KeySection =
   | "home"
-  | "services"
-  | "process"
-  | "solutions"
-  | "successStories"
-  | "pricing"
+  | "diagnostic"
+  | "beforeAfter"
+  | "clientWork"
+  | "proof"
+  | "about"
   | "contact"
   | "footer";
 
 export const navTestIds = {
-  home: "nav-link-home",
-  services: "nav-link-services",
-  process: "nav-link-process",
-  caseStudies: "nav-link-case-studies",
-  blog: "nav-link-blog",
+  diagnostic: "nav-link-diagnostic",
+  work: "nav-link-work",
+  proof: "nav-link-proof",
+  about: "nav-link-about",
   contact: "nav-link-contact",
+} satisfies Record<NavItem, string>;
+
+export const mobileNavTestIds = {
+  diagnostic: "mobile-nav-link-diagnostic",
+  work: "mobile-nav-link-work",
+  proof: "mobile-nav-link-proof",
+  about: "mobile-nav-link-about",
+  contact: "mobile-nav-link-contact",
 } satisfies Record<NavItem, string>;
 
 export const languageOptionTestIds = {
@@ -34,11 +35,11 @@ export const languageOptionTestIds = {
 
 export const sectionTestIds = {
   home: "section-home",
-  services: "section-services",
-  process: "section-process",
-  solutions: "section-solutions",
-  successStories: "section-success-stories",
-  pricing: "section-pricing",
+  diagnostic: "section-diagnostic",
+  beforeAfter: "section-before-after",
+  clientWork: "section-client-work",
+  proof: "section-proof",
+  about: "section-about",
   contact: "section-contact",
   footer: "section-footer",
 } satisfies Record<KeySection, string>;
