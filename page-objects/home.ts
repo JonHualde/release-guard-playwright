@@ -8,11 +8,13 @@ class HomePage {
   readonly desktopNav: Locator;
   readonly mobileNavigation: Locator;
   readonly mobileNavToggle: Locator;
+  readonly heroConditions: Locator;
   readonly primaryCta: Locator;
   readonly secondaryCta: Locator;
   readonly stickyContactCta: Locator;
   readonly contactSection: Locator;
   readonly contactBookingCard: Locator;
+  readonly contactFallback: Locator;
   readonly calContainer: Locator;
   readonly calEmbed: Locator;
   readonly languageSwitcher: Locator;
@@ -21,6 +23,7 @@ class HomePage {
   readonly languageOptionFr: Locator;
   readonly languageOptionEn: Locator;
   readonly navLinks: Record<HomeTypes.NavItem, Locator>;
+  readonly mobileNavLinks: Record<HomeTypes.NavItem, Locator>;
   readonly languageOptions: Record<HomeTypes.LanguageOption, Locator>;
   readonly sections: Record<HomeTypes.KeySection, Locator>;
 
@@ -31,11 +34,13 @@ class HomePage {
     this.desktopNav = page.getByTestId("desktop-nav");
     this.mobileNavigation = page.locator("#mobile-navigation");
     this.mobileNavToggle = page.getByTestId("mobile-nav-toggle");
+    this.heroConditions = page.getByTestId("hero-conditions");
     this.primaryCta = page.getByTestId("hero-cta-primary");
     this.secondaryCta = page.getByTestId("hero-cta-secondary");
     this.stickyContactCta = page.getByTestId("sticky-cta-contact");
     this.contactSection = page.getByTestId("section-contact");
     this.contactBookingCard = page.getByTestId("contact-booking-card");
+    this.contactFallback = page.getByTestId("contact-fallback");
     this.calContainer = page.getByTestId("contact-cal-container");
     this.calEmbed = page.getByTestId("cal-embed");
     this.languageSwitcher = page.getByTestId("language-switcher");
@@ -46,12 +51,18 @@ class HomePage {
     this.languageOptionFr = page.getByTestId("language-option-fr");
     this.languageOptionEn = page.getByTestId("language-option-en");
     this.navLinks = {
-      home: page.getByTestId(HomeTypes.navTestIds.home),
-      services: page.getByTestId(HomeTypes.navTestIds.services),
-      process: page.getByTestId(HomeTypes.navTestIds.process),
-      caseStudies: page.getByTestId(HomeTypes.navTestIds.caseStudies),
-      blog: page.getByTestId(HomeTypes.navTestIds.blog),
+      diagnostic: page.getByTestId(HomeTypes.navTestIds.diagnostic),
+      work: page.getByTestId(HomeTypes.navTestIds.work),
+      proof: page.getByTestId(HomeTypes.navTestIds.proof),
+      about: page.getByTestId(HomeTypes.navTestIds.about),
       contact: page.getByTestId(HomeTypes.navTestIds.contact),
+    };
+    this.mobileNavLinks = {
+      diagnostic: page.getByTestId(HomeTypes.mobileNavTestIds.diagnostic),
+      work: page.getByTestId(HomeTypes.mobileNavTestIds.work),
+      proof: page.getByTestId(HomeTypes.mobileNavTestIds.proof),
+      about: page.getByTestId(HomeTypes.mobileNavTestIds.about),
+      contact: page.getByTestId(HomeTypes.mobileNavTestIds.contact),
     };
     this.languageOptions = {
       fr: page.getByTestId(HomeTypes.languageOptionTestIds.fr),
@@ -59,13 +70,11 @@ class HomePage {
     };
     this.sections = {
       home: page.getByTestId(HomeTypes.sectionTestIds.home),
-      services: page.getByTestId(HomeTypes.sectionTestIds.services),
-      process: page.getByTestId(HomeTypes.sectionTestIds.process),
-      solutions: page.getByTestId(HomeTypes.sectionTestIds.solutions),
-      successStories: page.getByTestId(
-        HomeTypes.sectionTestIds.successStories,
-      ),
-      pricing: page.getByTestId(HomeTypes.sectionTestIds.pricing),
+      diagnostic: page.getByTestId(HomeTypes.sectionTestIds.diagnostic),
+      beforeAfter: page.getByTestId(HomeTypes.sectionTestIds.beforeAfter),
+      clientWork: page.getByTestId(HomeTypes.sectionTestIds.clientWork),
+      proof: page.getByTestId(HomeTypes.sectionTestIds.proof),
+      about: page.getByTestId(HomeTypes.sectionTestIds.about),
       contact: page.getByTestId(HomeTypes.sectionTestIds.contact),
       footer: page.getByTestId(HomeTypes.sectionTestIds.footer),
     };
@@ -85,9 +94,9 @@ class HomePage {
     await this.contactSection.waitFor({ state: "visible" });
   }
 
-  async openServicesFromSecondaryCta() {
+  async openClientWorkFromSecondaryCta() {
     await this.secondaryCta.click();
-    await this.sections.services.waitFor({ state: "visible" });
+    await this.sections.clientWork.waitFor({ state: "visible" });
   }
 
   async openMobileMenu() {
@@ -95,8 +104,10 @@ class HomePage {
     await this.mobileNavigation.waitFor({ state: "visible" });
   }
 
+  // By test id rather than label: the label is translated and was renamed
+  // once already, which silently broke the previous "Discuter" lookup.
   async clickMobileContactLink() {
-    await this.mobileNavigation.getByRole("link", { name: "Discuter" }).click();
+    await this.mobileNavLinks.contact.click();
   }
 
   async selectLanguage(language: HomeTypes.LanguageOption) {

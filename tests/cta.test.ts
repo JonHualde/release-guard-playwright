@@ -16,15 +16,28 @@ test.describe("conversion guard", () => {
     await expect(home.calEmbed).toHaveAttribute("data-cal-link", /.+/);
   });
 
-  test("secondary CTA leads visitors to service content", async ({ page }) => {
+  test("secondary CTA leads visitors to the client work", async ({ page }) => {
     const home = new HomePage(page);
 
     await home.goTo();
 
     await expect(home.secondaryCta).toBeVisible();
-    await home.openServicesFromSecondaryCta();
+    await home.openClientWorkFromSecondaryCta();
 
-    await expect(home.section("services")).toBeInViewport();
-    await expect(page.getByTestId("services-grid")).toBeVisible();
+    await expect(home.section("clientWork")).toBeInViewport();
+    await expect(page.getByTestId("client-case-fountain")).toBeVisible();
+  });
+
+  // Visitors who are not ready to book still get a way in
+  test("contact offers a fallback without booking", async ({ page }) => {
+    const home = new HomePage(page);
+
+    await home.goTo();
+
+    await expect(home.contactFallback).toBeAttached();
+    await expect(page.getByTestId("contact-fallback-email")).toHaveAttribute(
+      "href",
+      /^mailto:.+@.+/,
+    );
   });
 });
