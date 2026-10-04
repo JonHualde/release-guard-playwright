@@ -5,7 +5,12 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
-  # Sent by the site's own workflow after each production deploy
+    inputs:
+      trigger:
+        description: "Label recorded in latest.json (watch-site.yml sends 'deploy')"
+        required: false
+        default: manual
+  # Can also be sent by another repository after a deploy
   repository_dispatch:
     types: [site-deployed]
   schedule:
@@ -41,6 +46,12 @@ jobs:
             echo "BASE_URL secret is required to run the release guard in CI."
             exit 1
           fi
+      # Fingerprint of the page under test, read before the run so a deploy
+      # landing mid-run is caught by the next watch.
+      - name: Record the tested site version
+        run: |
+          version=$(curl -sfI "$BASE_URL" | tr -d '\r' | awk 'tolower($1)=="etag:" {print $2}' | tr -d '"')
+          echo "SITE_VERSION=${version}" >> "$GITHUB_ENV"
       - name: Run Playwright tests
         run: npm test
       - uses: actions/upload-artifact@v7
@@ -60,6 +71,7 @@ jobs:
         if: ${{ !cancelled() && github.event_name != 'pull_request' && hashFiles('results/results.json') != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          RUN_TRIGGER: ${{ inputs.trigger == 'deploy' && 'deploy' || '' }}
         run: |
           set -euo pipefail
           mkdir pages-site

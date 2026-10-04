@@ -102,7 +102,7 @@ Every scheduled, deploy-triggered or manual CI run publishes its results to GitH
 
 `scripts/summarize-run.mjs` builds both JSON files from Playwright's JSON reporter. The `gh-pages` branch is rebuilt as a single commit on each run, so traces do not accumulate in git. Pull request runs are not published.
 
-The suite also runs after each production deploy of the site: the site's workflow sends a `site-deployed` repository dispatch when Vercel reports a successful production deployment.
+The suite also runs after each deploy of the site, with no token shared between repositories: `.github/workflows/watch-site.yml` checks every 30 minutes whether the ETag of the live home page differs from the one recorded in `latest.json` (`siteVersion`), and starts a run labelled `deploy` if it does. A `site-deployed` repository dispatch is also accepted.
 
 The target is the author's own public site, so publishing the report exposes nothing private. The `BASE_URL` secret stays in place so the suite can be pointed elsewhere.
 

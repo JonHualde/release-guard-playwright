@@ -80,7 +80,11 @@ const latest = {
   durationMs: Math.round(results.stats?.duration ?? 0),
   status: totals.failed > 0 ? "failed" : "passed",
   totals,
-  trigger: TRIGGER[env.GITHUB_EVENT_NAME] ?? env.GITHUB_EVENT_NAME ?? "local",
+  // RUN_TRIGGER lets watch-site.yml label the runs it starts as "deploy"
+  trigger: env.RUN_TRIGGER || TRIGGER[env.GITHUB_EVENT_NAME] || env.GITHUB_EVENT_NAME || "local",
+  // ETag of the tested home page: watch-site.yml compares it with the live
+  // one to spot a new deploy
+  siteVersion: env.SITE_VERSION || null,
   commit: env.GITHUB_SHA ? env.GITHUB_SHA.slice(0, 7) : null,
   runUrl,
   reportPath: "report/",
