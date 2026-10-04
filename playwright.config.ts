@@ -25,16 +25,23 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: isCI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  /* In CI the JSON results feed the published run summary (scripts/summarize-run.mjs). */
   reporter: isCI
-    ? [["github"], ["list"], ["html", { open: "never" }]]
+    ? [
+        ["github"],
+        ["list"],
+        ["html", { open: "never" }],
+        ["json", { outputFile: "results/results.json" }],
+      ]
     : [["list"], ["html", { open: "never" }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL,
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    /* CI keeps a trace for every test so the published report opens in the trace viewer.
+       See https://playwright.dev/docs/trace-viewer */
+    trace: isCI ? "on" : "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },

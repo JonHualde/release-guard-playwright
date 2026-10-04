@@ -5,12 +5,24 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
+  # Sent by the site's own workflow after each production deploy
+  repository_dispatch:
+    types: [site-deployed]
   schedule:
     - cron: "0 8 * * 1"
+
+# Two runs must not push to gh-pages at the same time. Queue them instead
+# of cancelling: every run belongs in the published history.
+concurrency:
+  group: release-guard
+  cancel-in-progress: false
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
     steps:
@@ -39,3 +51,31 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 5
+
+      # Publish the HTML report, latest.json, history.json and the health
+      # page to GitHub Pages, green or red. Pull requests are not published.
+      # gh-pages is rebuilt as a single commit each time so traces do not pile
+      # up in git; history.json carries the track record forward.
+      - name: Publish report and run summary
+        if: ${{ !cancelled() && github.event_name != 'pull_request' && hashFiles('results/results.json') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir pages-site
+          cd pages-site
+          git init -q
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git fetch -q --depth 1 origin gh-pages 2>/dev/null; then
+            git show FETCH_HEAD:history.json > history.json 2>/dev/null || rm -f history.json
+          fi
+          git checkout -q --orphan gh-pages
+          cp -r ../playwright-report report
+          cp ../pages/index.html index.html
+          touch .nojekyll
+          node ../scripts/summarize-run.mjs ../results/results.json .
+          git add -A
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Publish run ${GITHUB_RUN_ID}"
+          git push -q -f origin HEAD:gh-pages
