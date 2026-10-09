@@ -1,0 +1,72 @@
+[
+  {
+    "runAt": "2026-10-09T14:48:36.992Z",
+    "status": "passed",
+    "totals": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "durationMs": 34321,
+    "trigger": "deploy",
+    "commit": "6cfbe3a",
+    "runUrl": "https://github.com/JonHualde/release-guard-playwright/actions/runs/37946778321",
+    "failedTests": [],
+    "flakyTests": []
+  },
+  {
+    "runAt": "2026-10-09T14:44:52.200Z",
+    "status": "passed",
+    "totals": {
+      "total": 20,
+      "passed": 19,
+      "failed": 0,
+      "flaky": 1,
+      "skipped": 0
+    },
+    "durationMs": 66406,
+    "trigger": "push",
+    "commit": "6cfbe3a",
+    "runUrl": "https://github.com/JonHualde/release-guard-playwright/actions/runs/37946357137",
+    "failedTests": [],
+    "flakyTests": [
+      "mobile-chromium › mobile usability guard › page does not create obvious horizontal overflow"
+    ]
+  },
+  {
+    "runAt": "2026-10-04T10:37:07.697Z",
+    "status": "passed",
+    "totals": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "durationMs": 30903,
+    "trigger": "manual",
+    "commit": "7b4884b",
+    "runUrl": "https://github.com/JonHualde/release-guard-playwright/actions/runs/37195887191",
+    "failedTests": [],
+    "flakyTests": []
+  },
+  {
+    "runAt": "2026-10-04T09:07:55.728Z",
+    "status": "passed",
+    "totals": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0
+    },
+    "durationMs": 40341,
+    "trigger": "manual",
+    "commit": "61a8dcc",
+    "runUrl": "https://github.com/JonHualde/release-guard-playwright/actions/runs/37191098127",
+    "failedTests": [],
+    "flakyTests": []
+  }
+]
