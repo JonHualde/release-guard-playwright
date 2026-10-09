@@ -74,7 +74,9 @@ Tests are filtered at the project level instead of using runtime `test.skip` cal
 - `tests/`: release guard specs.
 - `page-objects/`: lightweight page objects and shared page actions.
 - `playwright.config.ts`: browser projects, base URL, reporter, and debug artifacts.
-- `.github/workflows/playwright.yml`: CI execution and report upload.
+- `.github/workflows/playwright.yml`: CI execution, report upload and GitHub Pages publishing.
+- `scripts/summarize-run.mjs`: turns the JSON results into `latest.json` and `history.json`.
+- `pages/index.html`: the suite health page published at the root of GitHub Pages.
 
 ## Debug Artifacts
 
@@ -89,6 +91,21 @@ These artifacts should make a failed release guard actionable without rerunning 
 
 In public repositories, traces, screenshots, videos, and HTML reports can reveal the tested site. CI artifact upload is disabled by default; set the GitHub repository variable `UPLOAD_ARTIFACTS=true` only when the target and report contents are safe to share.
 
+## Published Results
+
+Every scheduled, deploy-triggered or manual CI run publishes its results to GitHub Pages, green or red:
+
+- [Suite health](https://jonhualde.github.io/release-guard-playwright/): last run, share of green runs, flaky tests, slowest tests and run history.
+- [HTML report](https://jonhualde.github.io/release-guard-playwright/report/) with a trace for every test.
+- [`latest.json`](https://jonhualde.github.io/release-guard-playwright/latest.json): the last run test by test. The hero of jonhualde.com reads it, so the site shows its own latest result.
+- [`history.json`](https://jonhualde.github.io/release-guard-playwright/history.json): the last 50 runs.
+
+`scripts/summarize-run.mjs` builds both JSON files from Playwright's JSON reporter. The `gh-pages` branch is rebuilt as a single commit on each run, so traces do not accumulate in git. Pull request runs are not published.
+
+The suite also runs after each deploy of the site, with no token shared between repositories: `.github/workflows/watch-site.yml` checks every 30 minutes whether the ETag of the live home page differs from the one recorded in `latest.json` (`siteVersion`), and starts a run labelled `deploy` if it does. A `site-deployed` repository dispatch is also accepted.
+
+The target is the author's own public site, so publishing the report exposes nothing private. The `BASE_URL` secret stays in place so the suite can be pointed elsewhere.
+
 ## Documentation
 
 - [Test Strategy](./test-strategy.md)
@@ -98,4 +115,3 @@ In public repositories, traces, screenshots, videos, and HTML reports can reveal
 
 - Add mobile localization if the language switcher becomes exposed in the mobile navigation.
 - Add a deeper Cal.com handoff test if the external flow is stable enough.
-- Publish a controlled public report only when the target URL and report contents are safe to expose.

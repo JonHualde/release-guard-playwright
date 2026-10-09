@@ -1,0 +1,45 @@
+name: Watch for site deploys
+
+# Runs the release guard soon after each deploy of the site, without any
+# token shared between repositories: every 30 minutes, compare the ETag of the
+# live home page with the one recorded by the last published run.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      GH_TOKEN: ${{ github.token }}
+      PAGES_URL: https://jonhualde.github.io/release-guard-playwright/latest.json
+    steps:
+      - name: Compare the live site with the last tested version
+        run: |
+          set -euo pipefail
+          live=$(curl -sfI "$BASE_URL" | tr -d '\r' | awk 'tolower($1)=="etag:" {print $2}' | tr -d '"')
+          tested=$(curl -sf "$PAGES_URL" | jq -r '.siteVersion // empty' || true)
+          echo "live=${live:-none} tested=${tested:-none}"
+          if [ -z "$live" ]; then
+            echo "::warning::No ETag on the live site, nothing to compare."
+            exit 0
+          fi
+          if [ "$live" = "$tested" ]; then
+            echo "Site unchanged since the last published run."
+            exit 0
+          fi
+          # Do not queue a second run if one is already going
+          busy=$(gh run list -R "$GITHUB_REPOSITORY" -w playwright.yml --json status \
+            -q '[.[] | select(.status != "completed")] | length')
+          if [ "$busy" != "0" ]; then
+            echo "A release guard run is already in progress."
+            exit 0
+          fi
+          gh workflow run playwright.yml -R "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" -f trigger=deploy
+          echo "New site version detected, release guard started."
