@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "runAt": "2026-11-09T18:13:45.763Z",
+  "durationMs": 28882,
+  "status": "passed",
+  "totals": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0
+  },
+  "trigger": "schedule",
+  "siteVersion": "bbf7f3a38b55c02f336118fa8058b76e",
+  "commit": "6cfbe3a",
+  "runUrl": "https://github.com/JonHualde/release-guard-playwright/actions/runs/42672064596",
+  "reportPath": "report/",
+  "tests": [
+    {
+      "title": "conversion guard › primary CTA exposes the booking flow",
+      "file": "cta.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 2840,
+      "retries": 0
+    },
+    {
+      "title": "conversion guard › secondary CTA leads visitors to the client work",
+      "file": "cta.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1935,
+      "retries": 0
+    },
+    {
+      "title": "conversion guard › contact offers a fallback without booking",
+      "file": "cta.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 495,
+      "retries": 0
+    },
+    {
+      "title": "conversion guard › primary CTA exposes the booking flow",
+      "file": "cta.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 3014,
+      "retries": 0
+    },
+    {
+      "title": "conversion guard › secondary CTA leads visitors to the client work",
+      "file": "cta.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 1891,
+      "retries": 0
+    },
+    {
+      "title": "conversion guard › contact offers a fallback without booking",
+      "file": "cta.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 752,
+      "retries": 0
+    },
+    {
+      "title": "localization guard › visitor can switch from French to English",
+      "file": "localization.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 700,
+      "retries": 0
+    },
+    {
+      "title": "navigation guard › desktop nav reaches diagnostic",
+      "file": "navigation.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 704,
+      "retries": 0
+    },
+    {
+      "title": "navigation guard › desktop nav reaches clientWork",
+      "file": "navigation.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1221,
+      "retries": 0
+    },
+    {
+      "title": "navigation guard › desktop nav reaches proof",
+      "file": "navigation.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1743,
+      "retries": 0
+    },
+    {
+      "title": "navigation guard › desktop nav reaches about",
+      "file": "navigation.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1753,
+      "retries": 0
+    },
+    {
+      "title": "navigation guard › desktop nav reaches contact",
+      "file": "navigation.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1681,
+      "retries": 0
+    },
+    {
+      "title": "credibility content guard › visitor can see the sections that explain the work and the proof",
+      "file": "sections.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 597,
+      "retries": 0
+    },
+    {
+      "title": "credibility content guard › working conditions are visible on arrival",
+      "file": "sections.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 544,
+      "retries": 0
+    },
+    {
+      "title": "credibility content guard › visitor can see the sections that explain the work and the proof",
+      "file": "sections.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 628,
+      "retries": 0
+    },
+    {
+      "title": "credibility content guard › working conditions are visible on arrival",
+      "file": "sections.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 486,
+      "retries": 0
+    },
+    {
+      "title": "technical health guard › main visitor journey has no first-party runtime errors",
+      "file": "technical-health.test.ts",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMs": 1578,
+      "retries": 0
+    },
+    {
+      "title": "technical health guard › main visitor journey has no first-party runtime errors",
+      "file": "technical-health.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 1643,
+      "retries": 0
+    },
+    {
+      "title": "mobile usability guard › mobile visitor can open navigation and reach booking section",
+      "file": "responsive.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 2043,
+      "retries": 0
+    },
+    {
+      "title": "mobile usability guard › page does not create obvious horizontal overflow",
+      "file": "responsive.test.ts",
+      "project": "mobile-chromium",
+      "status": "passed",
+      "durationMs": 531,
+      "retries": 0
+    }
+  ]
+}
